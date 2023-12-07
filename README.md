@@ -1,1 +1,1 @@
-# Owen013.SmolHatchlingStoryMode
+# Smol Hatchling: Story Mode
