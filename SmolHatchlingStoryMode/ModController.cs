@@ -9,10 +9,10 @@ namespace SmolHatchlingStoryMode
         public static ModController Instance;
         public StoryController _storyController;
 
-        public override void Configure(IModConfig config)
-        {
-            base.Configure(config);
-        }
+        //public override void Configure(IModConfig config)
+        //{
+        //    base.Configure(config);
+        //}
 
         public void Awake()
         {
