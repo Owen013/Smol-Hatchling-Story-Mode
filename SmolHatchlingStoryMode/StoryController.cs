@@ -1,7 +1,5 @@
 ﻿using HarmonyLib;
-using System.Xml;
 using UnityEngine;
-using SmolHatchling;
 
 namespace SmolHatchlingStoryMode
 {

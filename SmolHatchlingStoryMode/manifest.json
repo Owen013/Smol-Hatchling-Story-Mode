@@ -5,6 +5,6 @@
   "name": "Smol Hatchling Story Mode",
   "uniqueName": "Owen013.SmolHatchlingStoryMode",
   "version": "0.1.0",
-  "owmlVersion": "2.9.0",
+  "owmlVersion": "2.9.8",
   "dependencies": [ "Owen013.TeenyHatchling" ]
 }

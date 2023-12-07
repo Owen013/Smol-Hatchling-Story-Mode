@@ -3,13 +3,10 @@ using OWML.ModHelper;
 
 namespace SmolHatchlingStoryMode
 {
-    public class SmolHatchlingStoryMode : ModBehaviour
+    public class ModController : ModBehaviour
     {
-        // Config
-        public bool _storyEnabled;
-
-        // Other
-        public static SmolHatchlingStoryMode Instance;
+        public INewHorizons NewHorizonsAPI;
+        public static ModController Instance;
         public StoryController _storyController;
 
         public override void Configure(IModConfig config)
@@ -25,6 +22,8 @@ namespace SmolHatchlingStoryMode
 
         public void Start()
         {
+            NewHorizonsAPI = ModHelper.Interaction.TryGetModApi<INewHorizons>("xen.NewHorizons");
+            NewHorizonsAPI.LoadConfigs(this);
             // Ready
             ModHelper.Console.WriteLine($"Smol Hatchling Story Mode is ready to go!", MessageType.Success);
         }

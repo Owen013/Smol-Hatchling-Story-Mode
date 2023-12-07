@@ -3,9 +3,8 @@
     <OutputPath>$(AppData)\OuterWildsModManager\OWML\Mods\Owen013.SmolHatchlingStoryMode</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SmolHatchling">
-      <HintPath>$(AppData)\OuterWildsModManager\OWML\Mods\Owen013.TeenyHatchling\SmolHatchling.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
+    <Compile Update="INewHorizons.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 </Project>
