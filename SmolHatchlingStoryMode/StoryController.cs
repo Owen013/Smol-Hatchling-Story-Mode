@@ -5,12 +5,12 @@ namespace SmolHatchlingStoryMode
 {
     public class StoryController : MonoBehaviour
     {
-        public static StoryController Instance;
+        public static StoryController s_instance;
         public bool _busted;
 
         public void Awake()
         {
-            Instance = this;
+            s_instance = this;
             Harmony.CreateAndPatchAll(typeof(StoryController));
         }
 
@@ -18,9 +18,9 @@ namespace SmolHatchlingStoryMode
         [HarmonyPatch(typeof(CharacterDialogueTree), nameof(CharacterDialogueTree.EndConversation))]
         public static void EndConversation()
         {
-            if (DialogueConditionManager.s_instance.GetConditionState("Busted") && !Instance._busted)
+            if (!s_instance._busted && DialogueConditionManager.s_instance.GetConditionState("Busted"))
             {
-                Instance._busted = true;
+                s_instance._busted = true;
                 Locator.GetShipBody().GetComponentInChildren<ShipCockpitController>().LockUpControls(Mathf.Infinity);
                 NotificationManager.s_instance.PostNotification(new NotificationData(NotificationTarget.Player, "SHIP HAS BEEN DISABLED BY GROUND CONTROL", 5f), false);
                 NotificationManager.s_instance.PostNotification(new NotificationData(NotificationTarget.Ship, "SHIP DISABLED"), true);
@@ -41,14 +41,14 @@ namespace SmolHatchlingStoryAddon
 {
     public class StoryController : MonoBehaviour
     {
-        public static StoryController Instance;
+        public static StoryController s_instance;
         public AssetBundle _textAssets;
         public bool _storyEnabledNow;
         public bool _busted;
 
         public void Awake()
         {
-            Instance = this;
+            s_instance = this;
             Harmony.CreateAndPatchAll(typeof(StoryController));
         }
 
@@ -56,8 +56,8 @@ namespace SmolHatchlingStoryAddon
         {
             LoadManager.OnCompleteSceneLoad += (scene, loadScene) =>
             {
-                if (_textAssets == null) _textAssets = SHStoryAddonController.Instance.ModHelper.Assets.LoadBundle("Assets/sh_textassets");
-                if (SHStoryAddonController.Instance._storyEnabled == false)
+                if (_textAssets == null) _textAssets = SHStoryAddonController.s_instance.ModHelper.Assets.LoadBundle("Assets/sh_textassets");
+                if (SHStoryAddonController.s_instance._storyEnabled == false)
                 {
                     _storyEnabledNow = false;
                     return;
@@ -107,7 +107,7 @@ namespace SmolHatchlingStoryAddon
         {
             if (_textAssets == null)
             {
-                SmolHatchlingController.Instance.PrintLog("sh_textassets is null!");
+                SmolHatchlingController.s_instance.PrintLog("sh_textassets is null!");
                 return;
             }
             var dialogueTrees = FindObjectsOfType<CharacterDialogueTree>();
@@ -127,7 +127,7 @@ namespace SmolHatchlingStoryAddon
         {
             if (_textAssets == null)
             {
-                SmolHatchlingController.Instance.PrintLog("sh_textassets is null!");
+                SmolHatchlingController.s_instance.PrintLog("sh_textassets is null!");
                 return;
             }
             var dialogueTrees = FindObjectsOfType<CharacterDialogueTree>();
@@ -177,16 +177,16 @@ namespace SmolHatchlingStoryAddon
         [HarmonyPatch(typeof(ChertDialogueSwapper), nameof(ChertDialogueSwapper.SelectMood))]
         public static void ChertDialogueSwapped()
         {
-            StoryController.Instance.ChangeDialogueTree("Chert");
+            StoryController.s_instance.ChangeDialogueTree("Chert");
         }
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(CharacterDialogueTree), nameof(CharacterDialogueTree.EndConversation))]
         public static void EndConversation()
         {
-            if (DialogueConditionManager.s_instance.GetConditionState("Busted") && !StoryController.Instance._busted)
+            if (DialogueConditionManager.s_instance.GetConditionState("Busted") && !StoryController.s_instance._busted)
             {
-                StoryController.Instance._busted = true;
+                StoryController.s_instance._busted = true;
                 Locator.GetShipBody().GetComponentInChildren<ShipCockpitController>().LockUpControls(Mathf.Infinity);
                 NotificationManager.s_instance.PostNotification(new NotificationData(NotificationTarget.Player, "SHIP HAS BEEN DISABLED BY GROUND CONTROL", 5f), false);
                 NotificationManager.s_instance.PostNotification(new NotificationData(NotificationTarget.Ship, "SHIP DISABLED"), true);
