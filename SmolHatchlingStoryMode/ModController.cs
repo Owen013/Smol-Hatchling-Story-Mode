@@ -6,8 +6,8 @@ namespace SmolHatchlingStoryMode
     public class ModController : ModBehaviour
     {
         public static ModController s_instance;
-        public INewHorizons NewHorizonsAPI;
         public StoryController _storyController;
+        public INewHorizons NewHorizonsAPI;
 
         //public override void Configure(IModConfig config)
         //{

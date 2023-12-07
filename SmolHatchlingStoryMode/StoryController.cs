@@ -6,7 +6,7 @@ namespace SmolHatchlingStoryMode
     public class StoryController : MonoBehaviour
     {
         public static StoryController s_instance;
-        public bool _busted;
+        public bool _alreadyBusted;
 
         public void Awake()
         {
@@ -18,9 +18,9 @@ namespace SmolHatchlingStoryMode
         [HarmonyPatch(typeof(CharacterDialogueTree), nameof(CharacterDialogueTree.EndConversation))]
         public static void EndConversation()
         {
-            if (!s_instance._busted && DialogueConditionManager.s_instance.GetConditionState("Busted"))
+            if (!s_instance._alreadyBusted && DialogueConditionManager.s_instance.GetConditionState("Busted"))
             {
-                s_instance._busted = true;
+                s_instance._alreadyBusted = true;
                 Locator.GetShipBody().GetComponentInChildren<ShipCockpitController>().LockUpControls(Mathf.Infinity);
                 NotificationManager.s_instance.PostNotification(new NotificationData(NotificationTarget.Player, "SHIP HAS BEEN DISABLED BY GROUND CONTROL", 5f), false);
                 NotificationManager.s_instance.PostNotification(new NotificationData(NotificationTarget.Ship, "SHIP DISABLED"), true);
