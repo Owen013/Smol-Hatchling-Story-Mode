@@ -5,18 +5,18 @@ namespace SmolHatchlingStoryMode
 {
     public class ModController : ModBehaviour
     {
-        public INewHorizons NewHorizonsAPI;
-        public static ModController Instance;
+        public static ModController s_instance;
         public StoryController _storyController;
+        public INewHorizons NewHorizonsAPI;
 
-        public override void Configure(IModConfig config)
-        {
-            base.Configure(config);
-        }
+        //public override void Configure(IModConfig config)
+        //{
+        //    base.Configure(config);
+        //}
 
         public void Awake()
         {
-            Instance = this;
+            s_instance = this;
             gameObject.AddComponent<StoryController>();
         }
 
